@@ -162,6 +162,73 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-BFS广度优先遍历" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/08/BFS广度优先遍历/">BFS广度优先遍历</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/08/BFS广度优先遍历/" class="archive-article-date">
+  	<time datetime="2019-08-08T13:37:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>广度优先遍历类似于树中的层序遍历。<br>以迷宫探索为例，假设入口时A（第一层），与A直接相连的岔口有B，C（第二层），然后开始探索B，和B直接相连的岔路口有D，E（第三次），与C直接相连的岔路口有F，G（第三层），探索完B后探索C，之后又开始探索E，F，G，H，..</p>
+<h2 id="对于广度优先遍历可以用队列实现"><a href="#对于广度优先遍历可以用队列实现" class="headerlink" title="对于广度优先遍历可以用队列实现"></a><strong>对于广度优先遍历可以用队列实现</strong></h2><p>1.现在队列里放入起始点A，然后取队首元素A，将与A直接相连的岔口B，C入队，此时队里有{B，C}<br>2.队首元素B出队，和B直接相连的岔路口D，E入队对列里此时为{C，D，E}，<br>3.队首元素出队，和B直接相连的岔路口F，G入队对列里此时为{D，E，F，G}</p>
+<h2 id="4-以此类推，最后探索到出口，"><a href="#4-以此类推，最后探索到出口，" class="headerlink" title="4.以此类推，最后探索到出口，"></a>4.以此类推，最后探索到出口，</h2><h2 id="基本模板如下："><a href="#基本模板如下：" class="headerlink" title="基本模板如下："></a>基本模板如下：</h2><p>‘‘‘<br>    void BFS（int s）{<br>        queue<int> q;<br>        q.push(s);<br>        while(!q.empty()){<br>            取队首元素；<br>            访问（输出）队首元素；<br>            将队首元素出队；<br>            将队首元素的下一层的节点中未曾入队的节点全部入队；<br>        }<br>    }</int></p>
+<h2 id="‘‘‘"><a href="#‘‘‘" class="headerlink" title="‘‘‘"></a>‘‘‘</h2><p><strong>给定一个m*n的矩阵，矩阵中的元素为0或1，定义位置(x,y)的上,下，左，右，四个位置(x,y+1),(x,y-1),(x+1,y),(x-1,y),四个位置是相邻的，如果矩阵中有些1是相邻的，称他们构成了一个块，求给定矩阵中的快的个数</strong>；<br>0111001<br>0010000<br>0000100<br>0001110<br>1110100<br>1111000</p>
+<h2 id="这个6-7矩阵的块数为4"><a href="#这个6-7矩阵的块数为4" class="headerlink" title="这个6*7矩阵的块数为4"></a>这个6*7矩阵的块数为4</h2><p>‘‘‘<br>    #include<iostream><br>    #include<queue><br>    using namespace std;<br>    const int maxn=100;<br>    struct node{<br>    int x,y;<br>    }Node;<br>    int n,m;<br>    int store[maxn][maxn];              //存储每个位置的元素<br>    bool inq[maxn][maxn]={false};       //标记元素是否入队过<br>    int X[]={0,0,1,-1};<br>    int Y[]={1,-1,0,0};                 //定义四个位置<br>    bool judge(int x,int y){             //判断该节点的元素是否需要访问<br>        if(x&gt;n||x&lt;0||y&gt;m||y&lt;0)<br>            return false;<br>        if(inq[x][y]==true||store[x][y]==0)<br>            return false;<br>        return true;<br>    }<br>    void BFS(int x,int y){<br>        queue<node> Q;<br>        Node.x=x,Node.y=y;<br>        Q.push(Node);<br>        inq[x][y]=true;                  //标记该节点已入队<br>        while(!Q.empty()){<br>            node top=Q.front();    //取出该节点<br>            Q.pop();              //弹出队首元素<br>            for(int i=0;i&lt;4;i++){    //遍历相邻四个元素，判断是否需要访问，<br>                int newx=top.x+X[i];<br>                int newy=top.y+Y[i];<br>                if(judge(newx,newy)){<br>                    Node.x=newx;<br>                    Node.y=newy;<br>                    Q.push(Node);<br>                    inq[newx][newy]=true;   //对入队的元素标记<br>                }<br>            }<br>        }<br>    }<br>    int main(){<br>        cin&gt;&gt;n&gt;&gt;m;<br>        for(int i=0;i&lt;n;i++)<br>            for(int j=0;j&lt;n;j++)<br>                cin&gt;&gt;store[i][j];<br>        int sum=0;<br>        for(int i=0;i&lt;n;i++)<br>            for(int j=0;j&lt;m;j++){<br>                if(store[i][j]==1&amp;&amp;inq[i][j]==false){    //如果元素为1，且未被访问过<br>                    sum++;<br>                    BFS(i,j);<br>                }<br>        }<br>        cout&lt;&lt;”sum is :”&lt;&lt;sum&lt;&lt;endl;<br>    return 0;<br>    }</node></queue></iostream></p>
+<h2 id="‘‘‘-1"><a href="#‘‘‘-1" class="headerlink" title="‘‘‘"></a>‘‘‘</h2>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/08/BFS广度优先遍历/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-DFS-深度优先遍历" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
