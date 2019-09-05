@@ -194,7 +194,8 @@
 
 <h2 id="10-重启服务器"><a href="#10-重启服务器" class="headerlink" title="10.重启服务器"></a>10.重启服务器</h2><p><code>reboot</code> </p>
 <h2 id="11-win10-win-R-下输入-mstsc-弹出界面，连接远程桌面。"><a href="#11-win10-win-R-下输入-mstsc-弹出界面，连接远程桌面。" class="headerlink" title="11.win10 win+R 下输入 mstsc 弹出界面，连接远程桌面。"></a>11.win10 win+R 下输入 mstsc 弹出界面，连接远程桌面。</h2><p><img src="/2019/09/05/连接远程桌面踩的坑/last.png" alt="最终界面"></p>
-<p> <strong>连接阿里云的服务器，要把防火墙关掉，具体命令：</strong>：<br>执行关闭命令： <font color="#00ffff">systemctl stop firewalld.service</font><br>再次执行查看防火墙命令：<font color="#00ffff">systemctl status firewalld.service</font><br>执行开机禁用防火墙自启命令：<font color="#00ffff"> systemctl disable firewalld.service</font><br><strong>如果还不成功，在防火墙这里添加规则：加上3389端口，这一步很致命</strong><br><img src="/2019/09/05/连接远程桌面踩的坑/1.png" alt="防火墙"><br><img src="/2019/09/05/连接远程桌面踩的坑/port.png" alt="端口"></p>
+<p> <strong>连接阿里云的服务器，要把防火墙关掉，具体命令：</strong>：<br>执行关闭命令： <font color="#00ffff">systemctl stop firewalld.service</font><br>再次执行查看防火墙命令：<font color="#00ffff">systemctl status firewalld.service</font><br>执行开机禁用防火墙自启命令：<font color="#00ffff"> systemctl disable firewalld.service</font><br><strong>如果还不成功，登陆到阿里云的控制台，在防火墙这里添加规则：加上3389端口，这一步很致命</strong><br><img src="/2019/09/05/连接远程桌面踩的坑/1.png" alt="防火墙"> </p>
+<p><img src="/2019/09/05/连接远程桌面踩的坑/port.png" alt="端口"></p>
 <h2 id="安卓手机和平板远程连接"><a href="#安卓手机和平板远程连接" class="headerlink" title="安卓手机和平板远程连接"></a>安卓手机和平板远程连接</h2><p>以华为手机和平板为例 ：<br>    1.在应用市场下载 <strong>JuiceSShH</strong> ,通过命令行的方式远程连接。<br>    2.下载 <strong>RD Client</strong> ,以远程桌面的方式连接。</p>
 
       
