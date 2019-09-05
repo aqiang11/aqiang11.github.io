@@ -17,7 +17,9 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/2019/09/05/连接远程桌面踩的坑/grouplist.png">
 <meta property="og:image" content="http://yoursite.com/2019/09/05/连接远程桌面踩的坑/last.png">
-<meta property="og:updated_time" content="2019-09-05T13:58:02.235Z">
+<meta property="og:image" content="http://yoursite.com/2019/09/05/连接远程桌面踩的坑/1.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/05/连接远程桌面踩的坑/port.png">
+<meta property="og:updated_time" content="2019-09-05T14:09:27.901Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="连接远程桌面踩的坑">
 <meta name="twitter:description" content="租了个服务器，本来因为暑假学习web前端，想着自己搭一个网站，奈何域名解析需要使用三个月以上的服务器，我的服务器也就空下来了。这几天学习操作系统，老师让给自己电脑装上虚拟机，再安装Linux操作系统。想着我的服务器上不就是Linux（Centos）操作系统吗？可是云服务器只能通过putty这些命令行的方式交互，于是想着给云服务器的操作系统上安装GUI，然后装上eclipse等软件，再通过远程桌面连">
@@ -199,7 +201,7 @@
 
 <h2 id="10-重启服务器"><a href="#10-重启服务器" class="headerlink" title="10.重启服务器"></a>10.重启服务器</h2><p><code>reboot</code> </p>
 <h2 id="11-win10-win-R-下输入-mstsc-弹出界面，连接远程桌面。"><a href="#11-win10-win-R-下输入-mstsc-弹出界面，连接远程桌面。" class="headerlink" title="11.win10 win+R 下输入 mstsc 弹出界面，连接远程桌面。"></a>11.win10 win+R 下输入 mstsc 弹出界面，连接远程桌面。</h2><p><img src="/2019/09/05/连接远程桌面踩的坑/last.png" alt="最终界面"></p>
-<p>连接阿里云的服务器，要把防火墙关掉，具体命令：<br>执行关闭命令： <font color="#00ffff">systemctl stop firewalld.service</font><br>再次执行查看防火墙命令：<font color="#00ffff">systemctl status firewalld.service</font><br>执行开机禁用防火墙自启命令：<font color="#00ffff"> systemctl disable firewalld.service</font></p>
+<p> *<em>连接阿里云的服务器，要把防火墙关掉，具体命令 *</em>：<br>执行关闭命令： <font color="#00ffff">systemctl stop firewalld.service</font><br>再次执行查看防火墙命令：<font color="#00ffff">systemctl status firewalld.service</font><br>执行开机禁用防火墙自启命令：<font color="#00ffff"> systemctl disable firewalld.service</font><br>**如果还不成功，在防火墙这里添加规则：加上3389端口，这一步很致命。<br><img src="/2019/09/05/连接远程桌面踩的坑/1.png" alt> <img src="/2019/09/05/连接远程桌面踩的坑/port.png" alt></p>
 <h2 id="安卓手机和平板远程连接"><a href="#安卓手机和平板远程连接" class="headerlink" title="安卓手机和平板远程连接"></a>安卓手机和平板远程连接</h2><p>以华为手机和平板为例 ：<br>    1.在应用市场下载 <strong>JuiceSShH</strong> ,通过命令行的方式远程连接。<br>    2.下载 <strong>RD Client</strong> ,以远程桌面的方式连接。</p>
 
       
