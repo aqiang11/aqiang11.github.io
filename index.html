@@ -182,9 +182,45 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <hr>
-<p>租了个服务器，本来因为暑假学习web前端，想着自己搭一个网站，奈何域名解析需要使用三个月以上的服务器，我的服务器也就空下来了。<br>这几天学习操作系统，老师让给自己电脑装上虚拟机，再安装Linux操作系统。想着我的服务器上不就是Linux（Centos）操作系统吗？<br>可是云服务器只能通过putty这些命令行的方式交互，于是想着给云服务器的操作系统上安装GUI，然后装上eclipse等软件，再通过远程桌面连接。</p>
-<h2 id="这样只要我的网速够快，就可以在手机，平板上远程操作，来写Java，学linux。然而我在搞这个的过程中也踩了很多坑…"><a href="#这样只要我的网速够快，就可以在手机，平板上远程操作，来写Java，学linux。然而我在搞这个的过程中也踩了很多坑…" class="headerlink" title="这样只要我的网速够快，就可以在手机，平板上远程操作，来写Java，学linux。然而我在搞这个的过程中也踩了很多坑…"></a>这样只要我的网速够快，就可以在手机，平板上远程操作，来写Java，学linux。然而我在搞这个的过程中也踩了很多坑…</h2>
+        <pre><code>租了个服务器，本来因为暑假学习web前端，想着自己搭一个网站，奈何域名解析需要使用三个月以上的服务器，我的服务器也就空下来了。</code></pre><p>这几天学习操作系统，老师让给自己电脑装上虚拟机，再安装Linux操作系统。想着我的服务器上不就是Linux（Centos）操作系统吗？<br>可是云服务器只能通过putty这些命令行的方式交互，于是想着给云服务器的操作系统上安装GUI，然后装上eclipse等软件，再通过远程桌面连接。</p>
+<h2 id="这样只要我的网速够快，就可以在手机，平板上远程操作，来写Java，学linux。然而我在搞这个的过程中也踩了很多坑…"><a href="#这样只要我的网速够快，就可以在手机，平板上远程操作，来写Java，学linux。然而我在搞这个的过程中也踩了很多坑…" class="headerlink" title="这样只要我的网速够快，就可以在手机，平板上远程操作，来写Java，学linux。然而我在搞这个的过程中也踩了很多坑…"></a>这样只要我的网速够快，就可以在手机，平板上远程操作，来写Java，学linux。然而我在搞这个的过程中也踩了很多坑…</h2><pre><code># 从阿里云上租一个服务器，安装了centos7.3，要想远程连接有两种方式，一种时用命令行的方式，另一种就是用图形化界面的方式。操作步骤：
+## 1.系统版本Centos7.3，用root权限操作
+## 2.安装X windows
+` yum groupinstall -y “X Window System”   ` 
+## 3.查看已经安装和可以安装 软件：
+` yum grouplist `
+![和上图中的要一致](连接远程桌面踩的坑/grouplist.png)
+## 4.安装的下面两个软件一定要和提示的一直
+` yum groupinstall &quot;GNOME Desktop&quot; &quot;Graphical Administration Tools&quot;   `
+## 5.设置系统以图像化界面启动 `
+` ln -sf /lib/systemd/system/runlevel5.target /etc/systemd/system/default.target `
+## 6.安装xrdp   这里出现 Error: Packag 原因是安装的原因是Xrdp没有合适的xorgxrdp支持，采用降低xorgxrdp版本来支持xrdp,
+  在本地下载好合适的xorgxrdp用winSCp上传，安装注意xorgxrdp的版本（我用的是2.8的)  [下载地址](http://rpmfind.net/linux/rpm2html/search.php?query=xorgxrdp)
+  ` rpm - ivh  orgxrdp-0.2.8-1.fc29.x86_64.rpm`   
+## 7.再次安装xrdp
+` yum install -y xrdp  `    
+## 8.安装vnc server，因为xrdp运行是需要这个组件。
+` yum install tigervnc tigervnc-server  `
+## 9.启动xrdp,并设置开机自启，
+(```)
+    systemctl start xrdp
+    systemctl enable xrdp
+    systemctl status xrdp.service   
+    ss -antup|grep xrdp
+(```)
+## 10.重启服务器
+` reboot `
+## 11.win10 win+R 下输入mstsc弹出界面，连接远程桌面。
+![最终界面](连接远程桌面踩的坑/last.png)</code></pre><hr>
+<pre><code>连接阿里云的服务器，要把防火墙关掉，具体命令：
+执行关闭命令： &lt;font color=#00ffff &gt;systemctl stop firewalld.service&lt;/font&gt;
+再次执行查看防火墙命令：&lt;font color=#00ffff &gt;systemctl status firewalld.service&lt;/font&gt;
+执行开机禁用防火墙自启命令：&lt;font color=#00ffff &gt; systemctl disable firewalld.service&lt;/font&gt;</code></pre><hr>
+<pre><code># 安卓手机和平板远程连接
+以华为手机和平板为例 ：
+1.在应用市场下载 **JuiceSShH** ,通过命令行的方式远程连接。
+2.下载 **RD Client** ,以远程桌面的方式连接。</code></pre><hr>
+
       
 
       
