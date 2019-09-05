@@ -182,8 +182,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <pre><code>租了个服务器，本来因为暑假学习web前端，想着自己搭一个网站，奈何域名解析需要使用三个月以上的服务器，我的服务器也就空下来了。</code></pre><p>这几天学习操作系统，老师让给自己电脑装上虚拟机，再安装Linux操作系统。想着我的服务器上不就是Linux（Centos）操作系统吗？</p>
-<h2 id="可是云服务器只能通过putty这些命令行的方式交互，于是想着给云服务器的操作系统上安装GUI，然后装上eclipse等软件，再通过远程桌面连接。这样只要我的网速够快，就可以在手机，平板上远程操作，来写Java，学linux。然而我在搞这个的过程中也踩了很多坑…"><a href="#可是云服务器只能通过putty这些命令行的方式交互，于是想着给云服务器的操作系统上安装GUI，然后装上eclipse等软件，再通过远程桌面连接。这样只要我的网速够快，就可以在手机，平板上远程操作，来写Java，学linux。然而我在搞这个的过程中也踩了很多坑…" class="headerlink" title="可是云服务器只能通过putty这些命令行的方式交互，于是想着给云服务器的操作系统上安装GUI，然后装上eclipse等软件，再通过远程桌面连接。这样只要我的网速够快，就可以在手机，平板上远程操作，来写Java，学linux。然而我在搞这个的过程中也踩了很多坑…"></a>可是云服务器只能通过putty这些命令行的方式交互，于是想着给云服务器的操作系统上安装GUI，然后装上eclipse等软件，再通过远程桌面连接。这样只要我的网速够快，就可以在手机，平板上远程操作，来写Java，学linux。然而我在搞这个的过程中也踩了很多坑…</h2><h1 id="从阿里云上租一个服务器，安装了centos7-3，要想远程连接有两种方式，一种时用命令行的方式，另一种就是用图形化界面的方式。操作步骤："><a href="#从阿里云上租一个服务器，安装了centos7-3，要想远程连接有两种方式，一种时用命令行的方式，另一种就是用图形化界面的方式。操作步骤：" class="headerlink" title="从阿里云上租一个服务器，安装了centos7.3，要想远程连接有两种方式，一种时用命令行的方式，另一种就是用图形化界面的方式。操作步骤："></a>从阿里云上租一个服务器，安装了centos7.3，要想远程连接有两种方式，一种时用命令行的方式，另一种就是用图形化界面的方式。操作步骤：</h1><h2 id="1-系统版本Centos7-3，用root权限操作"><a href="#1-系统版本Centos7-3，用root权限操作" class="headerlink" title="1.系统版本Centos7.3，用root权限操作"></a>1.系统版本Centos7.3，用root权限操作</h2><h2 id="2-安装X-windows"><a href="#2-安装X-windows" class="headerlink" title="2.安装X windows"></a>2.安装X windows</h2><p><code>yum groupinstall -y “X Window System”</code> </p>
+        <pre><code>租了个服务器，本来因为暑假学习web前端，想着自己搭一个网站，奈何域名解析需要使用三个月以上的服务器，我的服务器也就空下来了。</code></pre><p>这几天学习操作系统，老师让给自己电脑装上虚拟机，再安装Linux操作系统。想着我的服务器上不就是Linux（Centos）操作系统吗？<br>可是云服务器只能通过putty这些命令行的方式交互，于是想着给云服务器的操作系统上安装GUI，然后装上eclipse等软件，再通过远程桌面连接。<br>这样只要我的网速够快，就可以在手机，平板上远程操作，来写Java，学linux。然而我在搞这个的过程中也踩了很多坑…</p>
+<h1 id="从阿里云上租一个服务器，安装了centos7-3，要想远程连接有两种方式，一种时用命令行的方式，另一种就是用图形化界面的方式。操作步骤："><a href="#从阿里云上租一个服务器，安装了centos7-3，要想远程连接有两种方式，一种时用命令行的方式，另一种就是用图形化界面的方式。操作步骤：" class="headerlink" title="从阿里云上租一个服务器，安装了centos7.3，要想远程连接有两种方式，一种时用命令行的方式，另一种就是用图形化界面的方式。操作步骤："></a>从阿里云上租一个服务器，安装了centos7.3，要想远程连接有两种方式，一种时用命令行的方式，另一种就是用图形化界面的方式。操作步骤：</h1><h2 id="1-系统版本Centos7-3，用root权限操作"><a href="#1-系统版本Centos7-3，用root权限操作" class="headerlink" title="1.系统版本Centos7.3，用root权限操作"></a>1.系统版本Centos7.3，用root权限操作</h2><h2 id="2-安装X-windows"><a href="#2-安装X-windows" class="headerlink" title="2.安装X windows"></a>2.安装X windows</h2><p><code>yum groupinstall -y “X Window System”</code> </p>
 <h2 id="3-查看已经安装和可以安装-软件："><a href="#3-查看已经安装和可以安装-软件：" class="headerlink" title="3.查看已经安装和可以安装 软件："></a>3.查看已经安装和可以安装 软件：</h2><p><code>yum grouplist</code><br><img src="/.com//grouplist.png" alt="和上图中的要一致"></p>
 <h2 id="4-安装的下面两个软件一定要和提示的一直"><a href="#4-安装的下面两个软件一定要和提示的一直" class="headerlink" title="4.安装的下面两个软件一定要和提示的一直"></a>4.安装的下面两个软件一定要和提示的一直</h2><p><code>yum groupinstall &quot;GNOME Desktop&quot; &quot;Graphical Administration Tools&quot;</code></p>
 <h2 id="5-设置系统以图像化界面启动"><a href="#5-设置系统以图像化界面启动" class="headerlink" title="5.设置系统以图像化界面启动 `"></a>5.设置系统以图像化界面启动 `</h2><p><code>ln -sf /lib/systemd/system/runlevel5.target /etc/systemd/system/default.target</code></p>
@@ -198,7 +198,6 @@
 (</code>)</p>
 <h2 id="10-重启服务器"><a href="#10-重启服务器" class="headerlink" title="10.重启服务器"></a>10.重启服务器</h2><p><code>reboot</code></p>
 <h2 id="11-win10-win-R-下输入mstsc弹出界面，连接远程桌面。"><a href="#11-win10-win-R-下输入mstsc弹出界面，连接远程桌面。" class="headerlink" title="11.win10 win+R 下输入mstsc弹出界面，连接远程桌面。"></a>11.win10 win+R 下输入mstsc弹出界面，连接远程桌面。</h2><p><img src="/.com//last.png" alt="最终界面"></p>
-<hr>
 <pre><code>连接阿里云的服务器，要把防火墙关掉，具体命令：
 执行关闭命令： &lt;font color=#00ffff &gt;systemctl stop firewalld.service&lt;/font&gt;
 再次执行查看防火墙命令：&lt;font color=#00ffff &gt;systemctl status firewalld.service&lt;/font&gt;
