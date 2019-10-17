@@ -198,7 +198,7 @@
 <p>运行结果是2，0.那this到底是谁？ – 当this在构造器中时，this就代表正在初始化的Java对象，从之前的代码来看，this是在Base()中，但这些代码实际是在Derived()构造器中执行的，因此this应该是Derived对象。而不是Base对象<br>那既然this是Derived对象那直接输出this.i为何会是2？这是因为this虽然代表了Derived对象，但是他却位于Base构造器中，编译时类型是Base，而他实际是一个Derived对象的引用，看下面代码：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public Base()</span><br><span class="line">   &#123;</span><br><span class="line">       System.out.println(this.i);</span><br><span class="line"></span><br><span class="line">       this.display();    </span><br><span class="line"></span><br><span class="line">       System.out.println(this.getClass());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>它最后的输出是Derived类型，但是如果你再用this来调用Base里的其他方法就会提示出错，因为this编译时类型就是Base。<br><img src="/2019/10/16/java里的类继承/2.jpg" alt="操作"></p>
+<p>它最后的输出是Derived类型，但是如果你再用this来调用Base里的其他方法就会提示出错，因为this编译时类型就是Base。当实际编译的类型与运行时的类型不一样时，通过该变量访问他的引用的对象的实例变量时，<br>该实例变量的值由声明该变量的类型决定，但通过该变量调用它引用对象的实例方法时，该方法将由它实际应用的对象的类型决定，当访问this.i时，会访问Base类中定义的i实例变量，就是2，但执行this.display()时，<br>则实际表现出Derived对象的行为，也就是Derived对象的实例变量0.<br><img src="/2019/10/16/java里的类继承/2.jpg" alt="操作"></p>
 
       
 
