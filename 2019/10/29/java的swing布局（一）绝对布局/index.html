@@ -6,15 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2019/10 | Hexo</title>
+  <title>java的swing布局（一）绝对布局  | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/2019/10/index.html">
+  <meta name="description" content="这几天学Java的swing编程，对关于swing的几个较为常用的布局进行讨论先是第一个绝对布局，看代码： 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768import java.awt.*;i">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java的swing布局（一）绝对布局 ">
+<meta property="og:url" content="http://yoursite.com/2019/10/29/java的swing布局（一）绝对布局/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="这几天学Java的swing编程，对关于swing的几个较为常用的布局进行讨论先是第一个绝对布局，看代码： 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768import java.awt.*;i">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2019/10/29/java的swing布局（一）绝对布局/1.PNG">
+<meta property="og:updated_time" content="2019-11-03T11:56:33.436Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="java的swing布局（一）绝对布局 ">
+<meta name="twitter:description" content="这几天学Java的swing编程，对关于swing的几个较为常用的布局进行讨论先是第一个绝对布局，看代码： 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768import java.awt.*;i">
+<meta name="twitter:image" content="http://yoursite.com/2019/10/29/java的swing布局（一）绝对布局/1.PNG">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -160,76 +166,159 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-java的swing布局（一）绝对布局" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      java的swing布局（一）绝对布局 
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/10/29/java的swing布局（一）绝对布局/" class="archive-article-date">
+
+        
+        <a href="/2019/10/29/java的swing布局（一）绝对布局/" class="archive-article-date">
   	<time datetime="2019-10-29T13:47:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-29</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/29/java的swing布局（一）绝对布局/">java的swing布局（一）绝对布局 </a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这几天学Java的swing编程，对关于swing的几个较为常用的布局进行讨论<br>先是第一个绝对布局，看代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">import java.awt.*;</span><br><span class="line"></span><br><span class="line">import javax.swing.*;</span><br><span class="line"></span><br><span class="line">public class Pig extends JFrame&#123;</span><br><span class="line">	public void create(String title) &#123;</span><br><span class="line">		JFrame jf=new JFrame();</span><br><span class="line">		Container  c=jf.getContentPane();</span><br><span class="line">		JPanel p1=new JPanel();</span><br><span class="line">		JLabel jLabel1=new JLabel(&quot;员工编号：&quot;);</span><br><span class="line">		jLabel1.setBounds(0,0,60,40);</span><br><span class="line">		</span><br><span class="line">		JTextField jT1=new JTextField();</span><br><span class="line">		jT1.setBounds(60, 0,180,40);</span><br><span class="line">		</span><br><span class="line">		JLabel jLabel2=new JLabel(&quot;借用器具：&quot;);</span><br><span class="line">		jLabel2.setBounds(260,0,60,40);</span><br><span class="line">		</span><br><span class="line">		JTextField jT2=new JTextField();</span><br><span class="line">		jT2.setBounds(320, 0,180,40);</span><br><span class="line">		</span><br><span class="line">		JLabel jLabel3=new JLabel(&quot;借用日期：&quot;);</span><br><span class="line">		jLabel3.setBounds(0,40,60,40);</span><br><span class="line">		</span><br><span class="line">		JTextField jT3=new JTextField();</span><br><span class="line">		jT3.setBounds(60, 40,180,40);</span><br><span class="line">		</span><br><span class="line">		JLabel jLabel4=new JLabel(&quot;归还日期：&quot;);</span><br><span class="line">		jLabel4.setBounds(260,40,60,40);</span><br><span class="line">		</span><br><span class="line">		JTextField jT4=new JTextField();</span><br><span class="line">		jT4.setBounds(320, 40,180,40);</span><br><span class="line"></span><br><span class="line">		JLabel jLabel5=new JLabel(&quot;借用原因:&quot;);</span><br><span class="line">		jLabel5.setBounds(0,80,60,40);</span><br><span class="line"></span><br><span class="line">		JTextField jT5=new JTextField();</span><br><span class="line">		jT5.setBounds(60, 80,440,40);</span><br><span class="line"></span><br><span class="line">		JButton jb1=new JButton(&quot;确定&quot;);</span><br><span class="line">		jb1.setBounds(0,120,250,40);</span><br><span class="line">		</span><br><span class="line">		JButton jb2=new JButton(&quot;取消&quot;); </span><br><span class="line">		jb2.setBounds(250,120,250,40);</span><br><span class="line">		</span><br><span class="line">		p1.add(jLabel1);</span><br><span class="line">		p1.add(jT1);</span><br><span class="line">		p1.add(jLabel2);</span><br><span class="line">		p1.add(jT2);</span><br><span class="line">		p1.add(jLabel3);</span><br><span class="line">		p1.add(jT3);</span><br><span class="line">		p1.add(jLabel4);</span><br><span class="line">		p1.add(jT4);</span><br><span class="line">		p1.add(jLabel5);</span><br><span class="line">		p1.add(jT5);  </span><br><span class="line">		p1.add(jb1);</span><br><span class="line">		p1.add(jb2);   </span><br><span class="line">		c.add(p1);</span><br><span class="line">		jf.setTitle(title);</span><br><span class="line">		p1.setLayout(null);</span><br><span class="line">		jf.setBounds(200, 200, 500, 200);</span><br><span class="line">		jf.setVisible(true);</span><br><span class="line">		jf.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);</span><br><span class="line">	&#125;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">			new Pig().create(&quot;绝对布局&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-        <div class="article-info info-on-right">
-          
-          
+<p>运行结果如下：<br><img src="/2019/10/29/java的swing布局（一）绝对布局/1.PNG" alt="最终界面"></p>
 
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/10/29/java的swing布局（一）绝对布局/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/10/16/java里的类继承/" class="archive-article-date">
-  	<time datetime="2019-10-16T13:39:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-16</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/10/16/java里的类继承/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">java里的类继承</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/16/java里的类继承/">java里的类继承</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
+
+  
 
 
           </div>
@@ -252,8 +341,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
