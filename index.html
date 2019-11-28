@@ -162,6 +162,91 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-java的try-catch-fianlly的陷阱" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/28/java的try-catch-fianlly的陷阱/">java的try-catch-fianlly的陷阱</a>
+    </h1>
+  
+
+        
+        <a href="/2019/11/28/java的try-catch-fianlly的陷阱/" class="archive-article-date">
+  	<time datetime="2019-11-28T14:04:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="在学习java的异常的时候，总是有：如果遇见try-catch-finally-块，不管try，catch的情况如何，finally块总是会执行。但是对于下面几种或情况比较特殊："><a href="#在学习java的异常的时候，总是有：如果遇见try-catch-finally-块，不管try，catch的情况如何，finally块总是会执行。但是对于下面几种或情况比较特殊：" class="headerlink" title="在学习java的异常的时候，总是有：如果遇见try-catch-finally 块，不管try，catch的情况如何，finally块总是会执行。但是对于下面几种或情况比较特殊："></a>在学习java的异常的时候，总是有：如果遇见try-catch-finally 块，不管try，catch的情况如何，finally块总是会执行。但是对于下面几种或情况比较特殊：</h2><p>1.当在try中遇到return语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public class TryCatch &#123;</span><br><span class="line">	public TryCatch()&#123;</span><br><span class="line">		try &#123;</span><br><span class="line">			</span><br><span class="line">			System.out.println(&quot;try中的return之前&quot;);</span><br><span class="line">			return ;</span><br><span class="line">		//	System.out.println(&quot;try中的return之前&quot;);   //提示此行为不可达</span><br><span class="line">			</span><br><span class="line">			</span><br><span class="line">		&#125;catch (Exception e) &#123;</span><br><span class="line">			// TODO: handle exception</span><br><span class="line">		&#125;finally &#123;</span><br><span class="line">			System.out.println(&quot;执行finally&quot;);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		new TryCatch();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>输出结果：<br>    try中的return之前<br>    执行finally<br>可以看出：当try中遇到return语句，finally块还是会执行。执行完之后，立即返回。<br>2.return 语句后面的代码要执行吗 ？比如（return a++语句后面的 a++要执行吗？）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public class TryCatch &#123;</span><br><span class="line">	private int i=5;</span><br><span class="line">	public int test() &#123;</span><br><span class="line">		try &#123;</span><br><span class="line">			</span><br><span class="line">			System.out.println(&quot;try中的return之前&quot;+&apos;\n&apos;+&quot;i值是：&quot;+i);</span><br><span class="line">			return ++i;</span><br><span class="line">		//	System.out.println(&quot;try中的return之前&quot;);   //提示此行为不可达</span><br><span class="line">			</span><br><span class="line">			</span><br><span class="line">		&#125;catch (Exception e) &#123;</span><br><span class="line">			// TODO: handle exception</span><br><span class="line">		&#125;finally &#123;</span><br><span class="line">			System.out.println(&quot;执行finally&quot;+&quot;   i的值是：&quot;+i);</span><br><span class="line">	//	   return i+10;                                               // ①</span><br><span class="line">		&#125;</span><br><span class="line">		return i+5;</span><br><span class="line">	&#125;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		System.out.println(new TryCatch().test());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出结果:<br>    try中的return之前<br>    i值是：5<br>    执行finally   i的值是：6<br>    6</p>
+<p>如果finally块中，①处不加注释结果就是：</p>
+<p>try中的return之前<br>i值是：5<br>执行finally   i的值是：6</p>
+<h2 id="16"><a href="#16" class="headerlink" title="16"></a>16</h2><p>可以看出，当try块中遇到return后，会执行return后的语句，执行完之后就会到finally块中继续执行，当fianlly块中，有return语句，则会在finally块的return处结束。否则返回到try块处结束<br>3.try块中遇到System.exit(0)呢？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public class TryCatch &#123;</span><br><span class="line">	private int i=5;</span><br><span class="line">	public int test() &#123;</span><br><span class="line">		try &#123;</span><br><span class="line">			</span><br><span class="line">			System.out.println(&quot;try中的return之前&quot;+&apos;\n&apos;+&quot;i值是：&quot;+i);</span><br><span class="line">			System.exit(0);</span><br><span class="line">			</span><br><span class="line">			</span><br><span class="line">		&#125;catch (Exception e) &#123;</span><br><span class="line">			// TODO: handle exception</span><br><span class="line">		&#125;finally &#123;</span><br><span class="line">			System.out.println(&quot;执行finally&quot;+&quot;   i的值是：&quot;+i);</span><br><span class="line">	//	   return i+10;</span><br><span class="line">		&#125;</span><br><span class="line">		return i+5;</span><br><span class="line">	&#125;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		System.out.println(new TryCatch().test());</span><br><span class="line">		System.out.print(&quot;最后一行&quot;);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出结果：<br>    try中的return之前<br>    i值是：5<br>结果并没有执行: System.out.print(“最后一行”); 因为System.exit(0)会停止当前线程，和所有其他线程当成死亡，<br>System.exit(0)被调用时，虚拟机退出前要执行：<br>1、执行系统中注册的所有关闭钩子。<br>2、如果程序调用了System.runFinalizerOnExit(true);，那么JVM会对所有的还未结束的对象调用Finalizer。</p>
+<p><font color="red">  第二种方式已经被证明是极度危险的</font>，因此JDK  API文档中说明第二种方式已经过时了，因此实际开发中不应该使用这种危险的行为。</p>
+<p>可以看下面的System.out.在API中的声明：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public static void exit​(int status)</span><br><span class="line">Terminates the currently running Java Virtual Machine. The argument serves as a status code; by convention, a nonzero status code indicates abnormal termination.</span><br><span class="line">This method calls the exit method in class Runtime. This method never returns normally.</span><br><span class="line"></span><br><span class="line">The call System.exit(n) is effectively equivalent to the call:</span><br><span class="line"></span><br><span class="line"> Runtime.getRuntime().exit(n)</span><br><span class="line"> </span><br><span class="line">Parameters:</span><br><span class="line">status - exit status.</span><br><span class="line">Throws:</span><br><span class="line">SecurityException - if a security manager exists and its checkExit method doesn&apos;t allow exit with the specified status.</span><br><span class="line">See Also:</span><br><span class="line">Runtime.exit(int)</span><br></pre></td></tr></table></figure>
+
+<p>4.如果try中遇到throw语句呢？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public class TryCatch &#123;</span><br><span class="line">	public void test() &#123;</span><br><span class="line">		try &#123;</span><br><span class="line">			throw new RuntimeException(&quot;try处异常&quot;);	</span><br><span class="line">		&#125;finally &#123;</span><br><span class="line">			System.out.println(&quot;执行finally&quot;);</span><br><span class="line">			return ;            					 //  ①</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		new TryCatch().test();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出结果：执行finally<br>如果注释掉 ① 结果时L:<br>Exception in thread “main” java.lang.RuntimeException: try处异常<br>执行finally<br>    at lianxi.TryCatch.test(TryCatch.java:6)<br>    at lianxi.TryCatch.main(TryCatch.java:13)</p>
+<p>当这个符合了finally的执行流程，当程序执行try，catch块时，如果遇到throw语句，throw语句会导致该方法立即结束，系统在执行throw语句时并不会立即抛出异常，而是去寻找是否包含finally块，如果没有，则会立即抛出异常，如果有finally块，会将finally块执行完成后，系统才会再次跳回来抛出异常，如果finally块中有return语句，会在return处结束，也不会抛出异常。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/11/28/java的try-catch-fianlly的陷阱/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-java的swing布局（三）边界布局" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -855,81 +940,10 @@
 
 
   
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/01/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/2019/08/01/hello-world/" class="archive-article-date">
-  	<time datetime="2019-08-01T14:35:05.324Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/08/01/hello-world/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
   
 
 

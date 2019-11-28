@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2019 | Hexo</title>
+  <title>java的try-catch-fianlly的陷阱 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/2019/index.html">
+  <meta name="description" content="在学习java的异常的时候，总是有：如果遇见try-catch-finally 块，不管try，catch的情况如何，finally块总是会执行。但是对于下面几种或情况比较特殊：1.当在try中遇到return语句 12345678910111213141516171819public class TryCatch &amp;#123;	public TryCatch()&amp;#123;		try &amp;#123">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java的try-catch-fianlly的陷阱">
+<meta property="og:url" content="http://yoursite.com/2019/11/28/java的try-catch-fianlly的陷阱/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="在学习java的异常的时候，总是有：如果遇见try-catch-finally 块，不管try，catch的情况如何，finally块总是会执行。但是对于下面几种或情况比较特殊：1.当在try中遇到return语句 12345678910111213141516171819public class TryCatch &amp;#123;	public TryCatch()&amp;#123;		try &amp;#123">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-11-28T15:13:32.227Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="java的try-catch-fianlly的陷阱">
+<meta name="twitter:description" content="在学习java的异常的时候，总是有：如果遇见try-catch-finally 块，不管try，catch的情况如何，finally块总是会执行。但是对于下面几种或情况比较特殊：1.当在try中遇到return语句 12345678910111213141516171819public class TryCatch &amp;#123;	public TryCatch()&amp;#123;		try &amp;#123">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -160,295 +164,177 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-java的try-catch-fianlly的陷阱" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      java的try-catch-fianlly的陷阱
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/11/28/java的try-catch-fianlly的陷阱/" class="archive-article-date">
+
+        
+        <a href="/2019/11/28/java的try-catch-fianlly的陷阱/" class="archive-article-date">
   	<time datetime="2019-11-28T14:04:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-28</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/11/28/java的try-catch-fianlly的陷阱/">java的try-catch-fianlly的陷阱</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="在学习java的异常的时候，总是有：如果遇见try-catch-finally-块，不管try，catch的情况如何，finally块总是会执行。但是对于下面几种或情况比较特殊："><a href="#在学习java的异常的时候，总是有：如果遇见try-catch-finally-块，不管try，catch的情况如何，finally块总是会执行。但是对于下面几种或情况比较特殊：" class="headerlink" title="在学习java的异常的时候，总是有：如果遇见try-catch-finally 块，不管try，catch的情况如何，finally块总是会执行。但是对于下面几种或情况比较特殊："></a>在学习java的异常的时候，总是有：如果遇见try-catch-finally 块，不管try，catch的情况如何，finally块总是会执行。但是对于下面几种或情况比较特殊：</h2><p>1.当在try中遇到return语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public class TryCatch &#123;</span><br><span class="line">	public TryCatch()&#123;</span><br><span class="line">		try &#123;</span><br><span class="line">			</span><br><span class="line">			System.out.println(&quot;try中的return之前&quot;);</span><br><span class="line">			return ;</span><br><span class="line">		//	System.out.println(&quot;try中的return之前&quot;);   //提示此行为不可达</span><br><span class="line">			</span><br><span class="line">			</span><br><span class="line">		&#125;catch (Exception e) &#123;</span><br><span class="line">			// TODO: handle exception</span><br><span class="line">		&#125;finally &#123;</span><br><span class="line">			System.out.println(&quot;执行finally&quot;);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		new TryCatch();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-        <div class="article-info info-on-right">
-          
-          
+<hr>
+<p>输出结果：<br>    try中的return之前<br>    执行finally<br>可以看出：当try中遇到return语句，finally块还是会执行。执行完之后，立即返回。<br>2.return 语句后面的代码要执行吗 ？比如（return a++语句后面的 a++要执行吗？）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public class TryCatch &#123;</span><br><span class="line">	private int i=5;</span><br><span class="line">	public int test() &#123;</span><br><span class="line">		try &#123;</span><br><span class="line">			</span><br><span class="line">			System.out.println(&quot;try中的return之前&quot;+&apos;\n&apos;+&quot;i值是：&quot;+i);</span><br><span class="line">			return ++i;</span><br><span class="line">		//	System.out.println(&quot;try中的return之前&quot;);   //提示此行为不可达</span><br><span class="line">			</span><br><span class="line">			</span><br><span class="line">		&#125;catch (Exception e) &#123;</span><br><span class="line">			// TODO: handle exception</span><br><span class="line">		&#125;finally &#123;</span><br><span class="line">			System.out.println(&quot;执行finally&quot;+&quot;   i的值是：&quot;+i);</span><br><span class="line">	//	   return i+10;                                               // ①</span><br><span class="line">		&#125;</span><br><span class="line">		return i+5;</span><br><span class="line">	&#125;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		System.out.println(new TryCatch().test());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p>输出结果:<br>    try中的return之前<br>    i值是：5<br>    执行finally   i的值是：6<br>    6</p>
+<p>如果finally块中，①处不加注释结果就是：</p>
+<p>try中的return之前<br>i值是：5<br>执行finally   i的值是：6</p>
+<h2 id="16"><a href="#16" class="headerlink" title="16"></a>16</h2><p>可以看出，当try块中遇到return后，会执行return后的语句，执行完之后就会到finally块中继续执行，当fianlly块中，有return语句，则会在finally块的return处结束。否则返回到try块处结束<br>3.try块中遇到System.exit(0)呢？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public class TryCatch &#123;</span><br><span class="line">	private int i=5;</span><br><span class="line">	public int test() &#123;</span><br><span class="line">		try &#123;</span><br><span class="line">			</span><br><span class="line">			System.out.println(&quot;try中的return之前&quot;+&apos;\n&apos;+&quot;i值是：&quot;+i);</span><br><span class="line">			System.exit(0);</span><br><span class="line">			</span><br><span class="line">			</span><br><span class="line">		&#125;catch (Exception e) &#123;</span><br><span class="line">			// TODO: handle exception</span><br><span class="line">		&#125;finally &#123;</span><br><span class="line">			System.out.println(&quot;执行finally&quot;+&quot;   i的值是：&quot;+i);</span><br><span class="line">	//	   return i+10;</span><br><span class="line">		&#125;</span><br><span class="line">		return i+5;</span><br><span class="line">	&#125;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		System.out.println(new TryCatch().test());</span><br><span class="line">		System.out.print(&quot;最后一行&quot;);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出结果：<br>    try中的return之前<br>    i值是：5<br>结果并没有执行: System.out.print(“最后一行”); 因为System.exit(0)会停止当前线程，和所有其他线程当成死亡，<br>System.exit(0)被调用时，虚拟机退出前要执行：<br>1、执行系统中注册的所有关闭钩子。<br>2、如果程序调用了System.runFinalizerOnExit(true);，那么JVM会对所有的还未结束的对象调用Finalizer。</p>
+<p><font color="red">  第二种方式已经被证明是极度危险的</font>，因此JDK  API文档中说明第二种方式已经过时了，因此实际开发中不应该使用这种危险的行为。</p>
+<p>可以看下面的System.out.在API中的声明：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public static void exit​(int status)</span><br><span class="line">Terminates the currently running Java Virtual Machine. The argument serves as a status code; by convention, a nonzero status code indicates abnormal termination.</span><br><span class="line">This method calls the exit method in class Runtime. This method never returns normally.</span><br><span class="line"></span><br><span class="line">The call System.exit(n) is effectively equivalent to the call:</span><br><span class="line"></span><br><span class="line"> Runtime.getRuntime().exit(n)</span><br><span class="line"> </span><br><span class="line">Parameters:</span><br><span class="line">status - exit status.</span><br><span class="line">Throws:</span><br><span class="line">SecurityException - if a security manager exists and its checkExit method doesn&apos;t allow exit with the specified status.</span><br><span class="line">See Also:</span><br><span class="line">Runtime.exit(int)</span><br></pre></td></tr></table></figure>
+
+<p>4.如果try中遇到throw语句呢？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public class TryCatch &#123;</span><br><span class="line">	public void test() &#123;</span><br><span class="line">		try &#123;</span><br><span class="line">			throw new RuntimeException(&quot;try处异常&quot;);	</span><br><span class="line">		&#125;finally &#123;</span><br><span class="line">			System.out.println(&quot;执行finally&quot;);</span><br><span class="line">			return ;            					 //  ①</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		new TryCatch().test();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出结果：执行finally<br>如果注释掉 ① 结果时L:<br>Exception in thread “main” java.lang.RuntimeException: try处异常<br>执行finally<br>    at lianxi.TryCatch.test(TryCatch.java:6)<br>    at lianxi.TryCatch.main(TryCatch.java:13)</p>
+<p>当这个符合了finally的执行流程，当程序执行try，catch块时，如果遇到throw语句，throw语句会导致该方法立即结束，系统在执行throw语句时并不会立即抛出异常，而是去寻找是否包含finally块，如果没有，则会立即抛出异常，如果有finally块，会将finally块执行完成后，系统才会再次跳回来抛出异常，如果finally块中有return语句，会在return处结束，也不会抛出异常。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/11/28/java的try-catch-fianlly的陷阱/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/11/14/java的swing布局（三）边界布局/" class="archive-article-date">
-  	<time datetime="2019-11-14T13:17:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-14</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/11/14/java的swing布局（三）边界布局/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">java的swing布局（三）边界布局</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/11/14/java的swing布局（三）边界布局/">java的swing布局（三）边界布局</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/11/03/java的swing布局（二）流布局/" class="archive-article-date">
-  	<time datetime="2019-11-03T12:53:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/11/03/java的swing布局（二）流布局/">java的swing布局（二）流布局</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/10/29/java的swing布局（一）绝对布局/" class="archive-article-date">
-  	<time datetime="2019-10-29T13:47:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/29/java的swing布局（一）绝对布局/">java的swing布局（一）绝对布局 </a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/10/16/java里的类继承/" class="archive-article-date">
-  	<time datetime="2019-10-16T13:39:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/16/java里的类继承/">java里的类继承</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/05/连接远程桌面踩的坑/" class="archive-article-date">
-  	<time datetime="2019-09-05T09:40:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/05/连接远程桌面踩的坑/">连接远程桌面踩的坑</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/01/Java初学/" class="archive-article-date">
-  	<time datetime="2019-09-01T10:13:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/01/Java初学/">Java初学</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/08/BFS广度优先遍历/" class="archive-article-date">
-  	<time datetime="2019-08-08T13:37:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-08</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/08/BFS广度优先遍历/">BFS广度优先遍历</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/04/DFS-深度优先遍历/" class="archive-article-date">
-  	<time datetime="2019-08-04T13:42:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/04/DFS-深度优先遍历/">DFS-深度优先遍历</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/01/我的第一篇个人博客/" class="archive-article-date">
-  	<time datetime="2019-08-01T14:40:55.405Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/01/我的第一篇个人博客/">第一篇个人博客</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/2019/page/2/">2</a><a class="extend next" rel="next" href="/archives/2019/page/2/">Next &raquo;</a>
-    </nav>
   
 
 
@@ -472,8 +358,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
