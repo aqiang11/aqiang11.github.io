@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="在学习java的异常的时候，总是有：如果遇见try-catch-finally 块，不管try，catch的情况如何，finally块总是会执行。但是对于下面几种或情况比较特殊：1.当在try中遇到return语句 12345678910111213141516171819public class TryCatch &amp;#123;	public TryCatch()&amp;#123;		try &amp;#123">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-11-28T15:32:23.535Z">
+<meta property="og:updated_time" content="2019-11-30T04:34:51.021Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java的try-catch-fianlly的陷阱">
 <meta name="twitter:description" content="在学习java的异常的时候，总是有：如果遇见try-catch-finally 块，不管try，catch的情况如何，finally块总是会执行。但是对于下面几种或情况比较特殊：1.当在try中遇到return语句 12345678910111213141516171819public class TryCatch &amp;#123;	public TryCatch()&amp;#123;		try &amp;#123">
@@ -188,14 +188,15 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public class TryCatch &#123;</span><br><span class="line">	public TryCatch()&#123;</span><br><span class="line">		try &#123;</span><br><span class="line">			</span><br><span class="line">			System.out.println(&quot;try中的return之前&quot;);</span><br><span class="line">			return ;</span><br><span class="line">		//	System.out.println(&quot;try中的return之前&quot;);   //提示此行为不可达</span><br><span class="line">			</span><br><span class="line">			</span><br><span class="line">		&#125;catch (Exception e) &#123;</span><br><span class="line">			// TODO: handle exception</span><br><span class="line">		&#125;finally &#123;</span><br><span class="line">			System.out.println(&quot;执行finally&quot;);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		new TryCatch();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <hr>
-<p>输出结果：<br>    try中的return之前<br>    执行finally<br>可以看出：当try中遇到return语句，finally块还是会执行。执行完之后，立即返回。<br><strong>2.return 语句后面的代码要执行吗 ？（比如return a++语句后面的 a++要执行吗？）</strong></p>
+<p>输出结果：<br>    try中的return之前<br>    执行finally<br>可以看出：当try中遇到return语句，finally块还是会执行。执行完之后，立即返回。</p>
+<p><strong>2.return 语句后面的代码要执行吗 ？（比如return a++语句后面的 a++要执行吗？）</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public class TryCatch &#123;</span><br><span class="line">	private int i=5;</span><br><span class="line">	public int test() &#123;</span><br><span class="line">		try &#123;</span><br><span class="line">			</span><br><span class="line">			System.out.println(&quot;try中的return之前&quot;+&apos;\n&apos;+&quot;i值是：&quot;+i);</span><br><span class="line">			return ++i;</span><br><span class="line">		//	System.out.println(&quot;try中的return之前&quot;);   //提示此行为不可达</span><br><span class="line">			</span><br><span class="line">			</span><br><span class="line">		&#125;catch (Exception e) &#123;</span><br><span class="line">			// TODO: handle exception</span><br><span class="line">		&#125;finally &#123;</span><br><span class="line">			System.out.println(&quot;执行finally&quot;+&quot;   i的值是：&quot;+i);</span><br><span class="line">	//	   return i+10;                                               // ①</span><br><span class="line">		&#125;</span><br><span class="line">		return i+5;</span><br><span class="line">	&#125;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		System.out.println(new TryCatch().test());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>输出结果:<br>    try中的return之前<br>    i值是：5<br>    执行finally   i的值是：6<br>    6</p>
-<p>如果finally块中，①处不加注释结果就是：</p>
-<p>try中的return之前<br>i值是：5<br>执行finally   i的值是：6<br>16</p>
+<p>如果finally块中，①处不加注释结果就是：<br>try中的return之前<br>i值是：5<br>执行finally   i的值是：6<br>16</p>
 <hr>
-<p>可以看出，当try块中遇到return后，会执行return后的语句，执行完之后就会到finally块中继续执行，当fianlly块中，有return语句，则会在finally块的return处结束。否则返回到try块处结束<br><strong>3.try块中遇到System.exit(0)呢？</strong></p>
+<p>可以看出，当try块中遇到return后，会执行return后的语句，执行完之后就会到finally块中继续执行，当fianlly块中，有return语句，则会在finally块的return处结束。否则返回到try块处结束</p>
+<p><strong>3.try块中遇到System.exit(0)呢？</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public class TryCatch &#123;</span><br><span class="line">	private int i=5;</span><br><span class="line">	public int test() &#123;</span><br><span class="line">		try &#123;</span><br><span class="line">			</span><br><span class="line">			System.out.println(&quot;try中的return之前&quot;+&apos;\n&apos;+&quot;i值是：&quot;+i);</span><br><span class="line">			System.exit(0);</span><br><span class="line">			</span><br><span class="line">			</span><br><span class="line">		&#125;catch (Exception e) &#123;</span><br><span class="line">			// TODO: handle exception</span><br><span class="line">		&#125;finally &#123;</span><br><span class="line">			System.out.println(&quot;执行finally&quot;+&quot;   i的值是：&quot;+i);</span><br><span class="line">	//	   return i+10;</span><br><span class="line">		&#125;</span><br><span class="line">		return i+5;</span><br><span class="line">	&#125;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		System.out.println(new TryCatch().test());</span><br><span class="line">		System.out.print(&quot;最后一行&quot;);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>输出结果：<br>    try中的return之前<br>    i值是：5<br>结果并没有执行: System.out.print(“最后一行”); 因为System.exit(0)会停止当前线程，和所有其他线程当成死亡，<br>System.exit(0)被调用时，虚拟机退出前要执行：<br>1、执行系统中注册的所有关闭钩子。<br>2、如果程序调用了System.runFinalizerOnExit(true);，那么JVM会对所有的还未结束的对象调用Finalizer。</p>
@@ -301,9 +302,18 @@
   
 <nav id="article-nav">
   
+    <a href="/2020/01/01/Annual-summary-for-2019/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Annual summary for 2019
+        
+      </div>
+    </a>
   
-    <a href="/2019/11/14/java的swing布局（三）边界布局/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">java的swing布局（三）边界布局</div>
+  
+    <a href="/2019/10/16/java里的类继承/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">java里的类继承</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -346,7 +356,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2019 阿强
+    		&copy; 2020 阿强
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
