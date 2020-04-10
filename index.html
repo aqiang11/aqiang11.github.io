@@ -162,6 +162,77 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Dijikstra算法实现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/09/Dijikstra算法实现/">Dijikstra算法实现</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/09/Dijikstra算法实现/" class="archive-article-date">
+  	<time datetime="2020-04-09T15:04:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Dijikstra算法是图论里面的经典算法，用来算某一源点到其他各个点的最短路径的问题。"><a href="#Dijikstra算法是图论里面的经典算法，用来算某一源点到其他各个点的最短路径的问题。" class="headerlink" title="Dijikstra算法是图论里面的经典算法，用来算某一源点到其他各个点的最短路径的问题。"></a>Dijikstra算法是图论里面的经典算法，用来算某一源点到其他各个点的最短路径的问题。</h2><p><strong>算法的步骤</strong></p>
+<p>1.准备工作：<br>    (1).首先设置一个顶点集和S记录已经求得的最短路径的点集合，V初始时所有点的集和，初始时把源点v0从V中放入S，集和S每次加入一个新的点vi，都要更新v0到V-S中各点的最短路径值<br>    (2).设置一个distance数组用于记录源点到当前点的最短路径值（distance[i]表示源点到i号节点的最短路径）<br>    (3).设置一个pronode数组用于存放源点到当前节点时要经过的i的前驱节点(例如：0到3的最短路径是0-1-2-3；则distan[3]=2)用来在算法结束后根据数组找到他的最短路径信息<br>    (4).邻接矩阵weight[i][j]表示从i节点到j节点的权重，如果存在i到j的边则weight[i][j]为边权重，否则其值为∞<br>2.实现步骤：<br>    (1)初始化：集和S初始为{0},distance[]的初始值distance[i]=weight[0][i],i=1,2…n-1<br>    (2)从顶点集和V-S中选出vj满足vj=min{distance[i]|vi∈(V-S)} （就是从未确定最短路径的点集合中，选出离源点最近的那个点，这里就是贪心的思想），此时vj就是当前求得的一条从v0出发的最短路径的终点，把vj加入到已知最短路径的点集合S中去：S=S U{j}<br>    (3)修改从v0出发到集和(V-S)上任一点vk的最短路径值，如果distance[j]+weight[j][k]&lt;distance[k],那就把distance[k]更新为distance[j]+weight[j][k]，(意思是从v0到vk在不经过vj的情况下距离大于v0通过vj到vk的距离时，松弛他），<br>    (4)重复2~3操作共n-1次</p>
+<hr>
+<p>举例如下图：<br><img src="/2020/04/09/Dijikstra算法实现/graph.PNG" alt="graph"></p>
+<p>顶点 | 第一轮 |第二轮 | 第三轮 | 第四轮<br>:-: | :-: | :-: | :-: | :-: | :-:<br>2 | 10 (v1-v2) | 8  (v1-v5-v2)   | 8 (v1-v5-v2) √   |                   |<br>3 | ∞          | 14 (v1-v5-v3)   | 13 (v1-v5-v4-v3) | 9 {v1-v5-v2-v3} √ |<br>4 |    ∞          | 7  (v1-v5-v4) √ |                     |                    |<br>5 |    5(v1-v5) √ |                 |                    |                    |<br>集和S|{1,5}    |{1,5,4}          |{1,5,4,2}         |    {1,5,4,2,3}        |</p>
+<p>执行过程：<br>    初始化(第一轮)：集和S为{v1}，v1到v2，v5可达，到v3,v4不可达，因此distance数组为dista[2]=10,distance[5]=5;distance[3]=distance[4]=∞；选出最小的distace[5]将5号节点加入S中。<br>    第二轮：根据新加入的节点5，更新distance数组（只更新未被加入S中的点）distance[3]=∞，distance[5]+weight[5][3]&lt;distance[3],故更新distance[3]=distance[5]+weight[5][3] ;同理更新distance[2]=min（distance[2],distance[5]+weight[5][2]),distance[4]=min(distance[4],distance[5]+weight[5][4]);选出最短路径点v4 把4号节点放入S中。<br>    第三轮：根据新加入的节点4，更新distance数组;distance[2]=min(distance[2],distance[4]+weight[4][2]),distance[3]=min(distance[3],distance[3]+weight[4][3]);<br>    第四轮：根据新加入的节点2更新distance数组distance[3]=min(distance[3],distance[2]+weight[2][3])=9.</p>
+<hr>
+<p>为什么Dijikstra算法时不允许有负权重的？<br>    如果存在负权重，则S里面的某个点a以负权重相连的b点确定其最短路径时如果存在负权重，则S里面的某个点a与以负权重相连的b点确定其最短路径时，可能存在经过负权重后的路径才是最短路径，但此时a已经在S中无法在继续更新<br>如下两种情况都会导致Dijikstra算法失效<br>    <img src="/2020/04/09/Dijikstra算法实现/case.PNG" alt="error Case"></p>
+<pre><code>对于情况1，以1为源点，把节点3加入后，当再加入节点2时，原来的S里已经有节点3，但此时0-2-3才是最短路径，但无法更新0-3的距离。
+对于情况2，存在负回路，就不存在最短路径。</code></pre>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/09/Dijikstra算法实现/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Annual-summary-for-2019" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
