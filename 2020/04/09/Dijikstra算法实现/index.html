@@ -17,7 +17,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/2020/04/09/Dijikstra算法实现/graph.PNG">
 <meta property="og:image" content="http://yoursite.com/2020/04/09/Dijikstra算法实现/case.PNG">
-<meta property="og:updated_time" content="2020-04-10T04:45:35.664Z">
+<meta property="og:updated_time" content="2020-05-11T09:43:45.451Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dijikstra算法实现">
 <meta name="twitter:description" content="Dijikstra算法是图论里面的经典算法，用来算某一源点到其他各个点的最短路径的问题。算法的步骤 1.准备工作：    (1).首先设置一个顶点集和S记录已经求得的最短路径的点集合，V初始时所有点的集和，初始时把源点v0从V中放入S，集和S每次加入一个新的点vi，都要更新v0到V-S中各点的最短路径值    (2).设置一个distance数组用于记录源点到当前点的最短路径值（distance[">
@@ -240,7 +240,7 @@
 <p><font color="red" size="4">执行过程：</font><br>    初始化(第一轮)：集和S为{v1}，v1到v2，v5可达，到v3,v4不可达，因此distance数组为dista[2]=10,distance[5]=5;distance[3]=distance[4]=∞；选出最小的distace[5]将5号节点加入S中。<br>    第二轮：根据新加入的节点5，更新distance数组（只更新未被加入S中的点）distance[3]=∞，distance[5]+weight[5][3]&lt;distance[3],故更新distance[3]=distance[5]+weight[5][3] ;同理更新distance[2]=min（distance[2],distance[5]+weight[5][2]),distance[4]=min(distance[4],distance[5]+weight[5][4]);选出最短路径点v4 把4号节点放入S中。<br>    第三轮：根据新加入的节点4，更新distance数组;distance[2]=min(distance[2],distance[4]+weight[4][2]),distance[3]=min(distance[3],distance[3]+weight[4][3]);<br>    第四轮：根据新加入的节点2更新distance数组distance[3]=min(distance[3],distance[2]+weight[2][3])=9.</p>
 <hr>
 <p><strong><em>为什么Dijikstra算法时不允许有负权重的？</em></strong></p>
-<pre><code>如果存在负权重，则S里面的某个点a以负权重相连的b点确定其最短路径时如果存在负权重，则S里面的某个点a与以负权重相连的b点确定其最短路径时，可能存在经过负权重后的路径才是最短路径，但此时a已经在S中无法在继续更新</code></pre><p>如下两种情况都会导致Dijikstra算法失效<br>    <img src="/2020/04/09/Dijikstra算法实现/case.PNG" alt="error Case"></p>
+<pre><code>如果存在负权重，则S里面的某个点a与以负权重相连的b点确定其最短路径时，可能存在经过负权重后的路径才是最短路径，但此时a已经在S中无法在继续更新</code></pre><p>如下两种情况都会导致Dijikstra算法失效<br>    <img src="/2020/04/09/Dijikstra算法实现/case.PNG" alt="error Case"></p>
 <pre><code>对于情况1，以1为源点，把节点3加入后，当再加入节点2时，原来的S里已经有节点3，但此时0-2-3才是最短路径，但无法更新0-3的距离。
 对于情况2，存在负回路，就不存在最短路径。</code></pre><hr>
 <p>实现的代码如下：参考链接: <a href="https://blog.csdn.net/john_bian/article/details/74635967" target="_blank" rel="noopener">参考</a></p>
